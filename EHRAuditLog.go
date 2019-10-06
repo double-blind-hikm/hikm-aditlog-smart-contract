@@ -30,7 +30,7 @@ import (
 	sc "github.com/hyperledger/fabric/protos/peer"
 )
 
-//SmartContract struct
+// SmartContract struct
 type SmartContract struct {
 }
 
@@ -64,15 +64,15 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	case "initLedger":
 		return s.initLedger(APIstub)
 
-	case "addLogEntry":
-		return s.addLogEntry(APIstub, args)
+	case "addAuditLogEntry":
+		return s.addAuditLogEntry(APIstub, args)
 
-	case "addLogEntryFromChaincode":
-		return s.addLogEntryFromChaincode(APIstub, args)
+	case "addAuditLogEntryFromChaincode":
+		return s.addAuditLogEntryFromChaincode(APIstub, args)
 
-	case "getLogEntry":
+	case "getAuditLogEntry":
 		if hasAttribute(APIstub, "auditor") {
-			return s.getLogEntry(APIstub, args)
+			return s.getAuditLogEntry(APIstub, args)
 		}
 		return shim.Error("Unauthorised access dectected")
 
@@ -82,9 +82,9 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		}
 		return shim.Error("Unauthorised access dectected")
 
-	case "getHistoryForAuditKey":
+	case "getHistoryForAuditLogKey":
 		if hasAttribute(APIstub, "auditor") {
-			return s.getHistoryForAuditKey(APIstub, args)
+			return s.getHistoryForAuditLogKey(APIstub, args)
 		}
 		return shim.Error("Unauthorised access dectected")
 
@@ -108,8 +108,8 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	return shim.Success(nil)
 }
 
-//Add log entry from chaincode
-func (s *SmartContract) addLogEntryFromChaincode(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+// Add audtit log entry from chaincode
+func (s *SmartContract) addAuditLogEntryFromChaincode(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 10 {
 		return shim.Error("Incorrect number of arguments.")
@@ -140,8 +140,8 @@ func (s *SmartContract) addLogEntryFromChaincode(APIstub shim.ChaincodeStubInter
 	return shim.Success(nil)
 }
 
-//Add log entry
-func (s *SmartContract) addLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+//Add audit log entry
+func (s *SmartContract) addAuditLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 11 {
 		return shim.Error("Incorrect number of arguments.")
@@ -173,8 +173,8 @@ func (s *SmartContract) addLogEntry(APIstub shim.ChaincodeStubInterface, args []
 	return shim.Success(nil)
 }
 
-//Get log entry
-func (s *SmartContract) getLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+//Get audit log entry
+func (s *SmartContract) getAuditLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments.")
@@ -183,7 +183,7 @@ func (s *SmartContract) getLogEntry(APIstub shim.ChaincodeStubInterface, args []
 	return shim.Success(auditLogAsBytes)
 }
 
-//getAuditLogByRange
+// Get Audit Log By Range
 func (s *SmartContract) getAuditLogByRange(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 2 {
@@ -205,7 +205,7 @@ func (s *SmartContract) getAuditLogByRange(APIstub shim.ChaincodeStubInterface, 
 }
 
 //Get history for an audit log key
-func (s *SmartContract) getHistoryForAuditKey(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) getHistoryForAuditLogKey(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) < 1 {
 		return shim.Error("Incorrect number of arguments.")
