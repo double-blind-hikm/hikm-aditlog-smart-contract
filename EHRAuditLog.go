@@ -34,7 +34,7 @@ import (
 type SmartContract struct {
 }
 
-//AuditLog struct
+// Audit Log struct
 type AuditLog struct {
 	LogID            string `json:"logID"`
 	Timestamp        string `json:"timestamp"`
@@ -50,12 +50,12 @@ type AuditLog struct {
 	Status           string `json:"status"`
 }
 
-//Init method
+// Init method
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 	return shim.Success(nil)
 }
 
-//Invoke method
+// Invoke method
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	function, args := APIstub.GetFunctionAndParameters()
@@ -94,7 +94,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 
 }
 
-//Inisilize the ledger
+// Inisilize the ledger
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	txntmsp, err := APIstub.GetTxTimestamp()
 	if err != nil {
@@ -140,7 +140,7 @@ func (s *SmartContract) addAuditLogEntryFromChaincode(APIstub shim.ChaincodeStub
 	return shim.Success(nil)
 }
 
-//Add audit log entry
+// Add audit log entry
 func (s *SmartContract) addAuditLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 11 {
@@ -173,7 +173,7 @@ func (s *SmartContract) addAuditLogEntry(APIstub shim.ChaincodeStubInterface, ar
 	return shim.Success(nil)
 }
 
-//Get audit log entry
+// Get audit log entry
 func (s *SmartContract) getAuditLogEntry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 1 {
@@ -183,7 +183,7 @@ func (s *SmartContract) getAuditLogEntry(APIstub shim.ChaincodeStubInterface, ar
 	return shim.Success(auditLogAsBytes)
 }
 
-// Get Audit Log By Range
+// Get audit log by range
 func (s *SmartContract) getAuditLogByRange(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 2 {
@@ -227,7 +227,7 @@ func (s *SmartContract) getHistoryForAuditLogKey(APIstub shim.ChaincodeStubInter
 
 }
 
-//Start the chaincode
+// Start the chaincode
 func main() {
 	err := shim.Start(new(SmartContract))
 	if err != nil {
@@ -235,7 +235,7 @@ func main() {
 	}
 }
 
-//Helper methods
+// Helper methods
 func hasAttribute(APIstub shim.ChaincodeStubInterface, attr string) bool {
 	err := cid.AssertAttributeValue(APIstub, attr, "true")
 	if err != nil {
