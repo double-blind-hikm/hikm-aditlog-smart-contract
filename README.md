@@ -1,1 +1,1 @@
-# hikm-aditlog-smart-contract
+# hikm-auditlog-smart-contract
